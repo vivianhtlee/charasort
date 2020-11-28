@@ -113,6 +113,7 @@ body {
 .sorter > .image {
   width: 120px;
   height: 180px;
+  object-fit: cover;
   margin: auto;
   grid-row: 1 / 7;
   cursor: pointer;
@@ -210,18 +211,27 @@ label:hover {
 .result {
   height: 15px;
   margin-bottom: -1px;
-  display: grid;
-  width: 211px;
+  /* display: grid; */
+  /* width: 211px; */
   grid-template-columns: repeat(2, 1fr);
   border: 1px solid #000;
   margin-right: 5px;
+}
+
+.result thead {
+  background-color: #333;
+}
+
+.results td {
+  max-height: 180px;
+  text-align: center;
 }
 
 .result.image {
   height: 175px;
 }
 
-.result.image img {
+.result img {
   height: 160px;
 }
 
@@ -238,7 +248,7 @@ label:hover {
 .result > .left {
   width: 35px;
   padding: 1px 3px 1px 0.5em;
-  grid-column: 1 / 2;
+  /* grid-column: 1 / 2; */
   text-align: right;
 }
 
@@ -254,9 +264,9 @@ label:hover {
 }
 
 .result > .right {
-  width: 160px;
+  /* width: 160px; */
   padding: 1px 0em 1px 0em;
-  grid-column: 2 / 3;
+  /* grid-column: 2 / 3; */
   border-left: 1px solid #000;
   text-align: center;
 }

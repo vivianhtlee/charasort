@@ -478,17 +478,17 @@ function result(imageNum = 3) {
   document.querySelector('.options').style.display = 'none';
   document.querySelector('.info').style.display = 'none';
 
-  const header = '<div class="result head"><div class="left">Order</div><div class="right">Name</div></div>';
+  const header = '<thead><tr><th>Order</th><th>Name</th></tr></thead>';
   const timeStr = `This sorter was completed on ${new Date(timestamp + timeTaken).toString()} and took ${msToReadableTime(timeTaken)}. <a href="${location.protocol}//${sorterURL}">Do another sorter?</a>`;
   const imgRes = (char, num) => {
     const charName = reduceTextWidth(char.name, 'Arial 12px', 160);
     const charTooltip = char.name !== charName ? char.name : '';
-    return `<div class="result image"><div class="left"><span>${num}</span></div><div class="right"><img src="${char.img}"><div><span title="${charTooltip}">${charName}</span></div></div></div>`;
+    return `<tr><td>${num}</td><td><img src="${char.img}" class="image" style="max-height:180px"><br><span title="${charTooltip}">${charName}</span></td></tr>`;
   }
   const res = (char, num) => {
     const charName = reduceTextWidth(char.name, 'Arial 12px', 160);
     const charTooltip = char.name !== charName ? char.name : '';
-    return `<div class="result"><div class="left">${num}</div><div class="right"><span title="${charTooltip}">${charName}</span></div></div>`;
+    return `<tr><td>${num}</td><td><span title="${charTooltip}">${charName}</span></td></tr>`;
   }
 
   let rankNum       = 1;
@@ -502,13 +502,15 @@ function result(imageNum = 3) {
   resultTable.innerHTML = header;
   timeElem.innerHTML = timeStr;
 
+  resultTable.insertAdjacentHTML('beforeend', '<tbody id="result_tbody"></tbody>');
+  const resultBody = document.getElementById('result_tbody');
   characterDataToSort.forEach((val, idx) => {
     const characterIndex = finalSortedIndexes[idx];
     const character = characterDataToSort[characterIndex];
     if (imageDisplay-- > 0) {
-      resultTable.insertAdjacentHTML('beforeend', imgRes(character, rankNum));
+      resultBody.insertAdjacentHTML('beforeend', imgRes(character, rankNum));
     } else {
-      resultTable.insertAdjacentHTML('beforeend', res(character, rankNum));
+      resultBody.insertAdjacentHTML('beforeend', res(character, rankNum));
     }
     finalCharacters.push({ rank: rankNum, name: character.name });
 
@@ -780,7 +782,13 @@ function preloadImages() {
   };
 
   return Promise.all(characterDataToSort.map(async (char, idx) => {
-    characterDataToSort[idx].img = await loadImage(imageRoot + char.img);
+    let img_url;
+    if (char.img.includes('http')){
+      img_url = char.img;
+    }else{
+      img_url = imageRoot + char.img;
+    }
+    characterDataToSort[idx].img = await loadImage(img_url);
   }));
 }
 
