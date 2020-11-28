@@ -769,7 +769,11 @@ function preloadImages() {
   let imagesLoaded = 0;
 
   const loadImage = async (src) => {
-    const blob = await fetch(src).then(res => res.blob());
+    const blob = await fetch(src).then(res => {
+      if (!res.ok)
+        throw new Error("Not 2xx response");
+      return res.blob();
+    });
     return new Promise((res, rej) => {
       const reader = new FileReader();
       reader.onload = ev => {
@@ -785,10 +789,13 @@ function preloadImages() {
     let img_url;
     if (char.img.includes('http')){
       img_url = char.img;
-    }else{
+    } else {
       img_url = imageRoot + char.img;
     }
-    characterDataToSort[idx].img = await loadImage(img_url);
+    characterDataToSort[idx].img = await loadImage(img_url).catch(async err=>{
+      console.warn(`cannot fetch ${img_url}, try to fetch without image Root`, err);
+      return await loadImage(char.img);
+    });
   }));
 }
 

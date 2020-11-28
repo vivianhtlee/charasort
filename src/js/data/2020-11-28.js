@@ -18,14 +18,14 @@ dataSet[dataSetVersion].characterData = [
   },
   {
     name: "旅行者-空",
-    img: "https://img-os-static.mihoyo.com/upload/2020/01/15/862bc379e164e9a46689121b7e98dff6.jpeg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg",
+    img: "src/assets/main_char.jpg",
     opts: {
     }
   },
   {
-    name: "旅行者-螢",
-    img: "https://img-os-static.mihoyo.com/upload/2020/01/15/862bc379e164e9a46689121b7e98dff6.jpeg?x-oss-process=image/resize,s_150/quality,q_80/auto-orient,0/interlace,1/format,jpg",
-    opts: {
+    name: "旅行者-熒",
+    img: "src/assets/main_char.jpg",
+     opts: {
     }
   },
   {
